@@ -55,6 +55,7 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
           child: Image.asset("assets/splash.png")),
         ),
 
+
     );
   }
 }
