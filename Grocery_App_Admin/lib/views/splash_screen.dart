@@ -53,7 +53,7 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
       body: Center(
         child: ScaleTransition(
             scale: _animation,
-            child: Image.asset("assets/splash.png")),
+            child: Image.asset("assets/images/splash.png")),
       ),
 
 
