@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:fruit_app_admin/views/signin.dart';
+import 'package:fruit_app_admin/views/login.dart';
 
 
 
@@ -34,7 +34,7 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
     Timer(Duration(seconds: 4), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SigninScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     });
   }
