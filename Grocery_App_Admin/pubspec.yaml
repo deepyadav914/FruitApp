@@ -40,6 +40,10 @@ dependencies:
   firebase_database:
   firebase_storage:
   image_picker:
+  flutter_staggered_animations:
+  device_preview:
+  flutter_vector_icons:
+
 
 dev_dependencies:
   flutter_test:
@@ -91,5 +95,17 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: AquinoDemo
+      fonts:
+        - asset: assets/fonts/AquinoDemo.ttf
+
+    - family: Nisebuschgardens
+      fonts:
+        - asset: assets/fonts/Nisebuschgardens.ttf
+
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/NunitoBold.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

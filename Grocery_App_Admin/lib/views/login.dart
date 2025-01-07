@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fruit_app_admin/firebase/firebase_service.dart';
 import 'package:fruit_app_admin/views/home.dart';
@@ -15,23 +16,25 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: const Stack(
-          children: [
-            SizedBox(
-              child: Image(
-                image: AssetImage("assets/images/bg.png"),
-                fit: BoxFit.fill,
+      body: SafeArea(
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: const Stack(
+            children: [
+              SizedBox(
+                child: Image(
+                  image: AssetImage("assets/images/bg.png"),
+                  fit: BoxFit.fill,
+                ),
+                height: double.infinity,
+                width: double.infinity,
               ),
-              height: double.infinity,
-              width: double.infinity,
-            ),
-            Center(
-              child: LoginForm(),
-            )
-          ],
+              Center(
+                child: LoginForm(),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -53,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
 
-  void togglechnage() {
+  void toggleChange() {
     setState(() {
       isvisibility = !isvisibility;
     });
@@ -96,6 +99,7 @@ class _LoginFormState extends State<LoginForm> {
                     return null;
                   }
                 },
+                keyboardType: TextInputType.emailAddress,
                 controller: emailcontroller,
                 decoration: InputDecoration(
                     hintText: "E-mail",
@@ -106,7 +110,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
 
               SizedBox(
-                height: 10,
+                height: 20,
               ),
 
               TextFormField(
@@ -117,31 +121,31 @@ class _LoginFormState extends State<LoginForm> {
                     return null;
                   }
                 },
+                keyboardType: TextInputType.visiblePassword,
                 controller: passwordcontroller,
                 obscureText: isvisibility,
                 decoration: InputDecoration(
                     hintText: "Password",
                     suffixIcon: isvisibility
                         ? IconButton(
-                            onPressed: togglechnage,
+                            onPressed: toggleChange,
                             icon: const Icon(Icons.visibility))
                         : IconButton(
-                            onPressed: togglechnage,
+                            onPressed: toggleChange,
                             icon: const Icon(Icons.visibility_off)),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15))),
               ),
               SizedBox(
-                height: 15,
+                height: 40,
               ),
               CustomButtton(
                 title: 'Login',
                 backgroundColor: Colors.green,
                 foregroundColor: Colors.white,
-                callback: () {
-                  signinMethod(
-                      email: emailcontroller.text.toString(),
-                      password: passwordcontroller.text.toString());
+                callback: () async {
+                 await signInCheck(email: emailcontroller.text.toString(), password: passwordcontroller.text.toString());
+
                 },
                 isLoading: isloading,
               ),
@@ -152,7 +156,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Future<void> signinMethod(
+  Future<void> signInCheck(
       {required String email, required String password}) async {
     if (_formkey.currentState!.validate()) {
       setState(() {
@@ -161,12 +165,15 @@ class _LoginFormState extends State<LoginForm> {
 
       try {
         final user = await FirebaseServices()
-            .signInWithEmailAndPassword(email, password);
+            .signInWithEmailAndPassword(email: email, password: password);
 
         if (user != null) {
-          log(user.uid);
-          log(user.email.toString());
-          if (!context.mounted) return;
+          if (kDebugMode) {
+            log(user.uid);
+            log(user.email.toString());
+          }
+
+          if (!mounted) return;
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
@@ -174,8 +181,6 @@ class _LoginFormState extends State<LoginForm> {
             ),
             (route) => false,
           );
-        } else {
-          // show snackbar
         }
       } catch (e) {
         log(e.toString());

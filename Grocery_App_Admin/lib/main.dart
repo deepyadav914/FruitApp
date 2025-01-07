@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fruit_app_admin/account_demo.dart';
+import 'package:fruit_app_admin/demo.dart';
+import 'package:fruit_app_admin/views/home.dart';
 import 'package:fruit_app_admin/views/splash_screen.dart';
 
 Future<void> main() async {
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AnimatedSplashScreen(),
+      home:DemoScreen(),
 
     );
   }
